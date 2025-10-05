@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlugxFlow - Modern Financial Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <i class="fas fa-plug"></i>
+                    <span>PlugxFlow</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+                <div class="nav-buttons">
+                    <button class="btn btn-outline" id="loginBtn">Sign In</button>
+                    <button class="btn btn-primary" id="signupBtn">Get Started</button>
+                </div>
+                <div class="mobile-toggle" id="mobileToggle">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <ul class="mobile-nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#about">About</a></li>
+        </ul>
+        <div class="mobile-nav-buttons">
+            <button class="btn btn-outline" id="mobileLoginBtn">Sign In</button>
+            <button class="btn btn-primary" id="mobileSignupBtn">Get Started</button>
+        </div>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Auth Modal -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-container">
+            <button class="close-modal" id="closeModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">Sign In</button>
+                <button class="auth-tab" data-tab="signup">Create Account</button>
+            </div>
+
+            <form class="auth-form" id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password"
+                        required>
+                </div>
+                <button type="submit" class="auth-submit">Sign In</button>
+                <div class="auth-footer">
+                    <a href="#" id="forgotPassword">Forgot your password?</a>
+                </div>
+            </form>
+
+            <form class="auth-form" id="signupForm" style="display: none;">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" class="form-control" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" class="form-control" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" class="form-control" placeholder="Create a password"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm your password"
+                        required>
+                </div>
+                <button type="submit" class="auth-submit">Create Account</button>
+                <div class="auth-footer">
+                    By creating an account, you agree to our <a href="#">Terms of Service</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Connect Your Finances with PlugxFlow</h1>
+                <p>PlugxFlow helps you track expenses, set budgets, and achieve your financial goals with our intuitive
+                    mobile app and powerful analytics.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary">
+                        <i class="fab fa-apple"></i> App Store
+                    </button>
+                    <button class="btn btn-outline">
+                        <i class="fab fa-google-play"></i> Google Play
+                    </button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="app-preview-container">
+                    <div class="app-preview">
+                        <div class="app-screen">
+                            <div class="app-content">
+                                <div class="app-header">
+                                    <div class="app-logo">PlugxFlow</div>
+                                    <div class="app-nav">
+                                        <i class="fas fa-bell"></i>
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                </div>
+                                <div class="balance-card">
+                                    <h3>Total Balance</h3>
+                                    <h2>$8,420.50</h2>
+                                    <p>+2.5% from last month</p>
+                                </div>
+                                <div class="quick-actions">
+                                    <button class="action-btn">
+                                        <div class="action-icon">
+                                            <i class="fas fa-arrow-up"></i>
+                                        </div>
+                                        <span class="action-label">Send</span>
+                                    </button>
+                                    <button class="action-btn">
+                                        <div class="action-icon">
+                                            <i class="fas fa-arrow-down"></i>
+                                        </div>
+                                        <span class="action-label">Request</span>
+                                    </button>
+                                    <button class="action-btn">
+                                        <div class="action-icon">
+                                            <i class="fas fa-exchange-alt"></i>
+                                        </div>
+                                        <span class="action-label">Transfer</span>
+                                    </button>
+                                    <button class="action-btn">
+                                        <div class="action-icon">
+                                            <i class="fas fa-chart-line"></i>
+                                        </div>
+                                        <span class="action-label">Invest</span>
+                                    </button>
+                                </div>
+                                <div class="transactions">
+                                    <div class="transaction">
+                                        <div class="transaction-info">
+                                            <div class="transaction-icon">
+                                                <i class="fas fa-shopping-bag"></i>
+                                            </div>
+                                            <div class="transaction-details">
+                                                <h4>Amazon</h4>
+                                                <p>Online Shopping</p>
+                                            </div>
+                                        </div>
+                                        <div class="transaction-amount negative">-$42.50</div>
+                                    </div>
+                                    <div class="transaction">
+                                        <div class="transaction-info">
+                                            <div class="transaction-icon">
+                                                <i class="fas fa-money-bill-wave"></i>
+                                            </div>
+                                            <div class="transaction-details">
+                                                <h4>Salary</h4>
+                                                <p>Monthly Income</p>
+                                            </div>
+                                        </div>
+                                        <div class="transaction-amount positive">+$3,500.00</div>
+                                    </div>
+                                    <div class="transaction">
+                                        <div class="transaction-info">
+                                            <div class="transaction-icon">
+                                                <i class="fas fa-utensils"></i>
+                                            </div>
+                                            <div class="transaction-details">
+                                                <h4>Starbucks</h4>
+                                                <p>Food & Drink</p>
+                                            </div>
+                                        </div>
+                                        <div class="transaction-amount negative">-$5.75</div>
+                                    </div>
+                                    <div class="transaction">
+                                        <div class="transaction-info">
+                                            <div class="transaction-icon">
+                                                <i class="fas fa-film"></i>
+                                            </div>
+                                            <div class="transaction-details">
+                                                <h4>Netflix</h4>
+                                                <p>Entertainment</p>
+                                            </div>
+                                        </div>
+                                        <div class="transaction-amount negative">-$15.99</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Powerful Features</h2>
+                <p>Everything you need to manage your finances effectively in one place</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3>Expense Tracking</h3>
+                    <p>Automatically categorize and track your spending across all accounts with detailed visual
+                        reports.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Goal Setting</h3>
+                    <p>Set financial goals and track your progress with personalized recommendations to help you
+                        succeed.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Bank-Level Security</h3>
+                    <p>Your financial data is protected with 256-bit encryption and multi-factor authentication.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sync"></i>
+                    </div>
+                    <h3>Real-time Sync</h3>
+                    <p>All your financial information syncs instantly across all your devices, always up to date.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>AI Insights</h3>
+                    <p>Get personalized financial advice and spending predictions powered by advanced AI algorithms.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <h3>Bill Reminders</h3>
+                    <p>Never miss a payment with smart bill reminders and automated payment scheduling.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>What Our Users Say</h2>
+                <p>Join thousands of satisfied users who have transformed their financial lives</p>
+            </div>
+            <div class="testimonial-slider">
+                <div class="testimonial-slide active">
+                    <div class="testimonial-content">
+                        "PlugxFlow completely changed how I manage my money. I've saved over $5,000 in just six months
+                        by following the app's budgeting recommendations."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JS</div>
+                        <div class="author-info">
+                            <h4>Jessica Smith</h4>
+                            <p>Marketing Manager</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        "As a freelancer with irregular income, PlugxFlow's forecasting tools have been a game-changer.
+                        I can now plan my expenses with confidence."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MR</div>
+                        <div class="author-info">
+                            <h4>Michael Rodriguez</h4>
+                            <p>Freelance Designer</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        "The investment tracking feature helped me optimize my portfolio and I've seen a 15% return
+                        increase since using PlugxFlow's insights."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">ET</div>
+                        <div class="author-info">
+                            <h4>Emily Thompson</h4>
+                            <p>Financial Analyst</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-controls">
+                    <div class="slider-dot active" data-slide="0"></div>
+                    <div class="slider-dot" data-slide="1"></div>
+                    <div class="slider-dot" data-slide="2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Start Your Financial Journey Today</h2>
+            <p>Join over 500,000 users who are already taking control of their finances with PlugxFlow</p>
+            <div class="cta-buttons">
+                <button class="btn btn-light">
+                    <i class="fab fa-apple"></i> Download on App Store
+                </button>
+                <button class="btn btn-outline" style="border-color: white; color: white;">
+                    <i class="fab fa-google-play"></i> Get it on Google Play
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>PlugxFlow</h3>
+                    <p>The modern way to manage your money and achieve financial freedom.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Product</h3>
+                    <ul class="footer-links">
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 PlugxFlow. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
