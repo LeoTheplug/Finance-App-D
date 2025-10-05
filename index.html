@@ -5,8 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlugxFlow - Modern Financial Management</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="style.css">
+    <!-- Load Font Awesome with defer -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" defer>
 </head>
 
 <body>
@@ -67,13 +73,15 @@
                 <div class="form-group">
                     <label for="loginEmail">Email</label>
                     <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required>
+                    <div class="error-message" id="loginEmailError">Please enter a valid email address</div>
                 </div>
                 <div class="form-group">
                     <label for="loginPassword">Password</label>
                     <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password"
-                        required>
+                        required minlength="6">
+                    <div class="error-message" id="loginPasswordError">Password must be at least 6 characters</div>
                 </div>
-                <button type="submit" class="auth-submit">Sign In</button>
+                <button type="submit" class="auth-submit" id="loginSubmit">Sign In</button>
                 <div class="auth-footer">
                     <a href="#" id="forgotPassword">Forgot your password?</a>
                 </div>
@@ -83,22 +91,28 @@
                 <div class="form-group">
                     <label for="signupName">Full Name</label>
                     <input type="text" id="signupName" class="form-control" placeholder="Enter your full name" required>
+                    <div class="error-message" id="signupNameError">Please enter your full name</div>
                 </div>
                 <div class="form-group">
                     <label for="signupEmail">Email</label>
                     <input type="email" id="signupEmail" class="form-control" placeholder="Enter your email" required>
+                    <div class="error-message" id="signupEmailError">Please enter a valid email address</div>
                 </div>
                 <div class="form-group">
                     <label for="signupPassword">Password</label>
                     <input type="password" id="signupPassword" class="form-control" placeholder="Create a password"
-                        required>
+                        required minlength="8">
+                    <div class="error-message" id="signupPasswordError">Password must be at least 8 characters with
+                        letters and numbers</div>
+                    <div class="form-hint">Use 8+ characters with a mix of letters and numbers</div>
                 </div>
                 <div class="form-group">
                     <label for="confirmPassword">Confirm Password</label>
                     <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm your password"
                         required>
+                    <div class="error-message" id="confirmPasswordError">Passwords do not match</div>
                 </div>
-                <button type="submit" class="auth-submit">Create Account</button>
+                <button type="submit" class="auth-submit" id="signupSubmit">Create Account</button>
                 <div class="auth-footer">
                     By creating an account, you agree to our <a href="#">Terms of Service</a>
                 </div>
@@ -399,7 +413,7 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 
 </html>
