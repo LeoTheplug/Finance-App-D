@@ -95,6 +95,128 @@
         const loginForm = document.getElementById('loginForm');
         const signupForm = document.getElementById('signupForm');
 
+        // Form validation functions
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function validatePassword(password) {
+            return password.length >= 8 && /[a-zA-Z]/.test(password) && /[0-9]/.test(password);
+        }
+
+        function showError(inputId, errorId, message) {
+            const input = document.getElementById(inputId);
+            const error = document.getElementById(errorId);
+
+            input.classList.add('error');
+            error.textContent = message;
+            error.classList.add('show');
+        }
+
+        function clearError(inputId, errorId) {
+            const input = document.getElementById(inputId);
+            const error = document.getElementById(errorId);
+
+            input.classList.remove('error');
+            error.classList.remove('show');
+        }
+
+        function validateLoginForm() {
+            let isValid = true;
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            // Validate email
+            if (!validateEmail(email)) {
+                showError('loginEmail', 'loginEmailError', 'Please enter a valid email address');
+                isValid = false;
+            } else {
+                clearError('loginEmail', 'loginEmailError');
+            }
+
+            // Validate password
+            if (password.length < 6) {
+                showError('loginPassword', 'loginPasswordError', 'Password must be at least 6 characters');
+                isValid = false;
+            } else {
+                clearError('loginPassword', 'loginPasswordError');
+            }
+
+            return isValid;
+        }
+
+        function validateSignupForm() {
+            let isValid = true;
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Validate name
+            if (name.trim().length < 2) {
+                showError('signupName', 'signupNameError', 'Please enter your full name');
+                isValid = false;
+            } else {
+                clearError('signupName', 'signupNameError');
+            }
+
+            // Validate email
+            if (!validateEmail(email)) {
+                showError('signupEmail', 'signupEmailError', 'Please enter a valid email address');
+                isValid = false;
+            } else {
+                clearError('signupEmail', 'signupEmailError');
+            }
+
+            // Validate password
+            if (!validatePassword(password)) {
+                showError('signupPassword', 'signupPasswordError', 'Password must be at least 8 characters with letters and numbers');
+                isValid = false;
+            } else {
+                clearError('signupPassword', 'signupPasswordError');
+            }
+
+            // Validate confirm password
+            if (password !== confirmPassword) {
+                showError('confirmPassword', 'confirmPasswordError', 'Passwords do not match');
+                isValid = false;
+            } else {
+                clearError('confirmPassword', 'confirmPasswordError');
+            }
+
+            return isValid;
+        }
+
+        // Real-time validation for signup form
+        document.getElementById('signupPassword').addEventListener('input', function () {
+            const password = this.value;
+            if (password.length > 0 && !validatePassword(password)) {
+                showError('signupPassword', 'signupPasswordError', 'Password must be at least 8 characters with letters and numbers');
+            } else {
+                clearError('signupPassword', 'signupPasswordError');
+            }
+
+            // Also validate confirm password if it has value
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            if (confirmPassword.length > 0 && password !== confirmPassword) {
+                showError('confirmPassword', 'confirmPasswordError', 'Passwords do not match');
+            } else if (confirmPassword.length > 0) {
+                clearError('confirmPassword', 'confirmPasswordError');
+            }
+        });
+
+        document.getElementById('confirmPassword').addEventListener('input', function () {
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = this.value;
+
+            if (confirmPassword.length > 0 && password !== confirmPassword) {
+                showError('confirmPassword', 'confirmPasswordError', 'Passwords do not match');
+            } else {
+                clearError('confirmPassword', 'confirmPasswordError');
+            }
+        });
+
         // Open modal functions
         function openAuthModal(tab = 'login') {
             authModal.classList.add('active');
@@ -157,11 +279,16 @@
         // Form submission
         loginForm.addEventListener('submit', function (e) {
             e.preventDefault();
+
+            if (!validateLoginForm()) {
+                return;
+            }
+
             const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
 
             // In a real app, you would send this to your backend
-            console.log('Login attempt:', { email, password });
+            // Removed console.log with sensitive data
+            console.log('Login attempt for:', email);
             alert('Login functionality would connect to your backend in a real application.');
 
             // Close modal after "login"
@@ -171,18 +298,17 @@
 
         signupForm.addEventListener('submit', function (e) {
             e.preventDefault();
-            const name = document.getElementById('signupName').value;
-            const email = document.getElementById('signupEmail').value;
-            const password = document.getElementById('signupPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
 
-            if (password !== confirmPassword) {
-                alert('Passwords do not match!');
+            if (!validateSignupForm()) {
                 return;
             }
 
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+
             // In a real app, you would send this to your backend
-            console.log('Signup attempt:', { name, email, password });
+            // Removed console.log with sensitive data
+            console.log('Signup attempt for:', name, email);
             alert('Account creation would connect to your backend in a real application.');
 
             // Close modal after "signup"
