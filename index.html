@@ -5,17 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlugxFlow - Modern Financial Management</title>
-
-    <!-- Preload critical fonts -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style"
-        onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <!-- Load Font Awesome with defer -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" defer>
 </head>
 
 <body>
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
     <!-- Header & Navigation -->
     <header>
         <div class="container">
@@ -152,6 +149,16 @@
                                     <h3>Total Balance</h3>
                                     <h2>$8,420.50</h2>
                                     <p>+2.5% from last month</p>
+                                    <div class="balance-actions" style="margin-top: 15px; display: flex; gap: 10px;">
+                                        <button class="btn"
+                                            style="background: rgba(255,255,255,0.2); color: white; padding: 8px 12px; font-size: 0.8rem;">
+                                            <i class="fas fa-plus"></i> Add Money
+                                        </button>
+                                        <button class="btn"
+                                            style="background: rgba(255,255,255,0.2); color: white; padding: 8px 12px; font-size: 0.8rem;">
+                                            <i class="fas fa-chart-line"></i> View Report
+                                        </button>
+                                    </div>
                                 </div>
                                 <div class="quick-actions">
                                     <button class="action-btn">
@@ -344,6 +351,176 @@
                     <div class="slider-dot active" data-slide="0"></div>
                     <div class="slider-dot" data-slide="1"></div>
                     <div class="slider-dot" data-slide="2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>Simple, Transparent Pricing</h2>
+                <p>Choose the plan that works best for your financial journey</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Free</h3>
+                        <div class="price">
+                            <span class="currency">$</span>
+                            <span class="amount">0</span>
+                            <span class="period">/month</span>
+                        </div>
+                        <p>Perfect for getting started with basic financial tracking</p>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Basic expense tracking</li>
+                            <li><i class="fas fa-check"></i> 2 financial accounts</li>
+                            <li><i class="fas fa-check"></i> Manual transaction entry</li>
+                            <li><i class="fas fa-check"></i> Basic budget templates</li>
+                            <li><i class="fas fa-times"></i> Bank account sync</li>
+                            <li><i class="fas fa-times"></i> Investment tracking</li>
+                            <li><i class="fas fa-times"></i> AI financial insights</li>
+                            <li><i class="fas fa-times"></i> Priority support</li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-outline pricing-btn">Get Started Free</button>
+                </div>
+
+                <div class="pricing-card popular">
+                    <div class="popular-badge">Most Popular</div>
+                    <div class="pricing-header">
+                        <h3>Pro</h3>
+                        <div class="price">
+                            <span class="currency">$</span>
+                            <span class="amount">9</span>
+                            <span class="period">/month</span>
+                        </div>
+                        <p>Everything you need for complete financial control</p>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Advanced expense tracking</li>
+                            <li><i class="fas fa-check"></i> Unlimited financial accounts</li>
+                            <li><i class="fas fa-check"></i> Automatic bank sync</li>
+                            <li><i class="fas fa-check"></i> Custom budget categories</li>
+                            <li><i class="fas fa-check"></i> Investment portfolio tracking</li>
+                            <li><i class="fas fa-check"></i> AI-powered insights</li>
+                            <li><i class="fas fa-check"></i> Bill payment reminders</li>
+                            <li><i class="fas fa-check"></i> Priority email support</li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-primary pricing-btn">Start Free Trial</button>
+                </div>
+
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Business</h3>
+                        <div class="price">
+                            <span class="currency">$</span>
+                            <span class="amount">29</span>
+                            <span class="period">/month</span>
+                        </div>
+                        <p>Advanced features for business financial management</p>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Everything in Pro</li>
+                            <li><i class="fas fa-check"></i> Multi-user access</li>
+                            <li><i class="fas fa-check"></i> Business expense reports</li>
+                            <li><i class="fas fa-check"></i> Tax categorization</li>
+                            <li><i class="fas fa-check"></i> Invoice management</li>
+                            <li><i class="fas fa-check"></i> Vendor payment tracking</li>
+                            <li><i class="fas fa-check"></i> Custom financial dashboards</li>
+                            <li><i class="fas fa-check"></i> Dedicated account manager</li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-outline pricing-btn">Contact Sales</button>
+                </div>
+            </div>
+            <div class="pricing-footer">
+                <p>All plans include bank-level security and 256-bit encryption. 30-day money-back guarantee on paid
+                    plans.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <div class="section-title">
+                        <h2>About PlugxFlow</h2>
+                        <p>We're on a mission to make financial freedom accessible to everyone</p>
+                    </div>
+                    <div class="about-story">
+                        <p>Founded in 2020, PlugxFlow was born from a simple observation: managing personal finances
+                            shouldn't be complicated or stressful. Our team of financial experts, designers, and
+                            engineers came together to create an intuitive platform that empowers people to take control
+                            of their financial future.</p>
+
+                        <p>We believe that everyone deserves the tools and insights to make informed financial
+                            decisions, regardless of their background or expertise. That's why we've built PlugxFlow to
+                            be both powerful enough for financial experts and simple enough for complete beginners.</p>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">500K+</div>
+                            <div class="stat-label">Active Users</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">$2B+</div>
+                            <div class="stat-label">Assets Tracked</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">15+</div>
+                            <div class="stat-label">Countries</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">4.9/5</div>
+                            <div class="stat-label">App Store Rating</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-values">
+                    <h3>Our Values</h3>
+                    <div class="values-grid">
+                        <div class="value-item">
+                            <div class="value-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h4>Security First</h4>
+                            <p>Your financial data is protected with bank-level security and never shared without your
+                                permission.</p>
+                        </div>
+                        <div class="value-item">
+                            <div class="value-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <h4>Transparency</h4>
+                            <p>We're open about how we make money and clear about how we use your data.</p>
+                        </div>
+                        <div class="value-item">
+                            <div class="value-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <h4>User-Focused</h4>
+                            <p>Every feature is designed with our users' needs and feedback at the forefront.</p>
+                        </div>
+                        <div class="value-item">
+                            <div class="value-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <h4>Innovation</h4>
+                            <p>We continuously improve our platform with the latest technology and financial insights.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
