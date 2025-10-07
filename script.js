@@ -1,5 +1,56 @@
 
-        // Mobile Navigation Toggle with Animation
+        // Toast Notification System
+        function showToast(message, type = 'success', duration = 5000) {
+            const toastContainer = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+
+            const icons = {
+                success: 'fas fa-check-circle',
+                error: 'fas fa-exclamation-circle',
+                info: 'fas fa-info-circle'
+            };
+
+            toast.innerHTML = `
+                <div class="toast-icon">
+                    <i class="${icons[type]}"></i>
+                </div>
+                <div class="toast-content">
+                    <div class="toast-title">${type.charAt(0).toUpperCase() + type.slice(1)}</div>
+                    <div class="toast-message">${message}</div>
+                </div>
+                <button class="toast-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+
+            toastContainer.appendChild(toast);
+
+            // Animate in
+            setTimeout(() => toast.classList.add('show'), 100);
+
+            // Auto remove
+            const autoRemove = setTimeout(() => {
+                removeToast(toast);
+            }, duration);
+
+            // Manual close
+            toast.querySelector('.toast-close').addEventListener('click', () => {
+                clearTimeout(autoRemove);
+                removeToast(toast);
+            });
+
+            function removeToast(toastElement) {
+                toastElement.classList.remove('show');
+                setTimeout(() => {
+                    if (toastElement.parentNode) {
+                        toastElement.parentNode.removeChild(toastElement);
+                    }
+                }, 300);
+            }
+        }
+
+        // Mobile Navigation Toggle
         const mobileToggle = document.getElementById('mobileToggle');
         const mobileNav = document.getElementById('mobileNav');
         const overlay = document.getElementById('overlay');
@@ -95,6 +146,84 @@
         const loginForm = document.getElementById('loginForm');
         const signupForm = document.getElementById('signupForm');
 
+        // Simple modal open/close functions
+        function openAuthModal(tab = 'login') {
+            authModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            // Set active tab
+            authTabs.forEach(t => {
+                t.classList.remove('active');
+            });
+
+            const activeTab = document.querySelector(`.auth-tab[data-tab="${tab}"]`);
+            if (activeTab) {
+                activeTab.classList.add('active');
+            }
+
+            // Show correct form
+            if (tab === 'login') {
+                loginForm.style.display = 'block';
+                signupForm.style.display = 'none';
+            } else {
+                loginForm.style.display = 'none';
+                signupForm.style.display = 'block';
+            }
+        }
+
+        function closeAuthModal() {
+            authModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Event listeners for opening modal
+        loginBtn.addEventListener('click', () => openAuthModal('login'));
+        signupBtn.addEventListener('click', () => openAuthModal('signup'));
+
+        mobileLoginBtn.addEventListener('click', () => {
+            openAuthModal('login');
+            mobileToggle.classList.remove('active');
+            mobileNav.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        mobileSignupBtn.addEventListener('click', () => {
+            openAuthModal('signup');
+            mobileToggle.classList.remove('active');
+            mobileNav.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        // Close modal
+        closeModal.addEventListener('click', closeAuthModal);
+
+        // Close modal when clicking outside
+        authModal.addEventListener('click', function (e) {
+            if (e.target === authModal) {
+                closeAuthModal();
+            }
+        });
+
+        // Switch between login and signup tabs
+        authTabs.forEach(tab => {
+            tab.addEventListener('click', function () {
+                const tabName = this.getAttribute('data-tab');
+
+                authTabs.forEach(t => {
+                    t.classList.remove('active');
+                });
+                this.classList.add('active');
+
+                if (tabName === 'login') {
+                    loginForm.style.display = 'block';
+                    signupForm.style.display = 'none';
+                } else {
+                    loginForm.style.display = 'none';
+                    signupForm.style.display = 'block';
+                }
+            });
+        });
+
         // Form validation functions
         function validateEmail(email) {
             const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -109,23 +238,30 @@
             const input = document.getElementById(inputId);
             const error = document.getElementById(errorId);
 
-            input.classList.add('error');
-            error.textContent = message;
-            error.classList.add('show');
+            if (input && error) {
+                input.classList.add('error');
+                error.textContent = message;
+                error.classList.add('show');
+            }
         }
 
         function clearError(inputId, errorId) {
             const input = document.getElementById(inputId);
             const error = document.getElementById(errorId);
 
-            input.classList.remove('error');
-            error.classList.remove('show');
+            if (input && error) {
+                input.classList.remove('error');
+                error.classList.remove('show');
+            }
         }
 
-        function validateLoginForm() {
-            let isValid = true;
+        // Form submission
+        loginForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
+            let isValid = true;
 
             // Validate email
             if (!validateEmail(email)) {
@@ -143,15 +279,21 @@
                 clearError('loginPassword', 'loginPasswordError');
             }
 
-            return isValid;
-        }
+            if (isValid) {
+                showToast('Login successful! Welcome back!', 'success');
+                closeAuthModal();
+                loginForm.reset();
+            }
+        });
 
-        function validateSignupForm() {
-            let isValid = true;
+        signupForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
             const name = document.getElementById('signupName').value;
             const email = document.getElementById('signupEmail').value;
             const password = document.getElementById('signupPassword').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
+            let isValid = true;
 
             // Validate name
             if (name.trim().length < 2) {
@@ -185,140 +327,62 @@
                 clearError('confirmPassword', 'confirmPasswordError');
             }
 
-            return isValid;
-        }
-
-        // Real-time validation for signup form
-        document.getElementById('signupPassword').addEventListener('input', function () {
-            const password = this.value;
-            if (password.length > 0 && !validatePassword(password)) {
-                showError('signupPassword', 'signupPasswordError', 'Password must be at least 8 characters with letters and numbers');
-            } else {
-                clearError('signupPassword', 'signupPasswordError');
+            if (isValid) {
+                showToast('Account created successfully! Welcome to PlugxFlow!', 'success');
+                closeAuthModal();
+                signupForm.reset();
             }
-
-            // Also validate confirm password if it has value
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            if (confirmPassword.length > 0 && password !== confirmPassword) {
-                showError('confirmPassword', 'confirmPasswordError', 'Passwords do not match');
-            } else if (confirmPassword.length > 0) {
-                clearError('confirmPassword', 'confirmPasswordError');
-            }
-        });
-
-        document.getElementById('confirmPassword').addEventListener('input', function () {
-            const password = document.getElementById('signupPassword').value;
-            const confirmPassword = this.value;
-
-            if (confirmPassword.length > 0 && password !== confirmPassword) {
-                showError('confirmPassword', 'confirmPasswordError', 'Passwords do not match');
-            } else {
-                clearError('confirmPassword', 'confirmPasswordError');
-            }
-        });
-
-        // Open modal functions
-        function openAuthModal(tab = 'login') {
-            authModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-
-            // Set active tab
-            authTabs.forEach(t => t.classList.remove('active'));
-            document.querySelector(`.auth-tab[data-tab="${tab}"]`).classList.add('active');
-
-            // Show correct form
-            if (tab === 'login') {
-                loginForm.style.display = 'block';
-                signupForm.style.display = 'none';
-            } else {
-                loginForm.style.display = 'none';
-                signupForm.style.display = 'block';
-            }
-        }
-
-        // Event listeners for opening modal
-        loginBtn.addEventListener('click', () => openAuthModal('login'));
-        signupBtn.addEventListener('click', () => openAuthModal('signup'));
-        mobileLoginBtn.addEventListener('click', () => {
-            openAuthModal('login');
-            mobileToggle.classList.remove('active');
-            mobileNav.classList.remove('active');
-            overlay.classList.remove('active');
-        });
-        mobileSignupBtn.addEventListener('click', () => {
-            openAuthModal('signup');
-            mobileToggle.classList.remove('active');
-            mobileNav.classList.remove('active');
-            overlay.classList.remove('active');
-        });
-
-        // Close modal
-        closeModal.addEventListener('click', () => {
-            authModal.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-
-        // Switch between login and signup tabs
-        authTabs.forEach(tab => {
-            tab.addEventListener('click', function () {
-                const tabName = this.getAttribute('data-tab');
-
-                authTabs.forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-
-                if (tabName === 'login') {
-                    loginForm.style.display = 'block';
-                    signupForm.style.display = 'none';
-                } else {
-                    loginForm.style.display = 'none';
-                    signupForm.style.display = 'block';
-                }
-            });
-        });
-
-        // Form submission
-        loginForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            if (!validateLoginForm()) {
-                return;
-            }
-
-            const email = document.getElementById('loginEmail').value;
-
-            // In a real app, you would send this to your backend
-            // Removed console.log with sensitive data
-            console.log('Login attempt for:', email);
-            alert('Login functionality would connect to your backend in a real application.');
-
-            // Close modal after "login"
-            authModal.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-
-        signupForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            if (!validateSignupForm()) {
-                return;
-            }
-
-            const name = document.getElementById('signupName').value;
-            const email = document.getElementById('signupEmail').value;
-
-            // In a real app, you would send this to your backend
-            // Removed console.log with sensitive data
-            console.log('Signup attempt for:', name, email);
-            alert('Account creation would connect to your backend in a real application.');
-
-            // Close modal after "signup"
-            authModal.classList.remove('active');
-            document.body.style.overflow = '';
         });
 
         // Forgot password
         document.getElementById('forgotPassword').addEventListener('click', function (e) {
             e.preventDefault();
-            alert('Password reset functionality would be implemented in a real application.');
+            showToast('Password reset email sent! Check your inbox.', 'info');
+        });
+
+        // App Store and Play Store buttons
+        document.querySelectorAll('.hero-buttons .btn, .cta-buttons .btn').forEach(button => {
+            button.addEventListener('click', function () {
+                if (this.textContent.includes('App Store')) {
+                    showToast('Redirecting to App Store...', 'info');
+                } else if (this.textContent.includes('Google Play') || this.textContent.includes('Play Store')) {
+                    showToast('Redirecting to Google Play...', 'info');
+                }
+            });
+        });
+
+        // Pricing buttons
+        document.querySelectorAll('.pricing-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const plan = this.closest('.pricing-card').querySelector('h3').textContent;
+                showToast(`You selected the ${plan} plan! Redirecting to checkout...`, 'info');
+            });
+        });
+
+        // Balance card buttons
+        document.querySelectorAll('.balance-actions .btn').forEach(button => {
+            button.addEventListener('click', function () {
+                if (this.textContent.includes('Add Money')) {
+                    showToast('Redirecting to add money page...', 'info');
+                } else {
+                    showToast('Opening financial report...', 'info');
+                }
+            });
+        });
+
+        // Keyboard navigation improvements
+        document.addEventListener('keydown', function (e) {
+            // Close modal on Escape key
+            if (e.key === 'Escape' && authModal.classList.contains('active')) {
+                closeAuthModal();
+            }
+
+            // Close mobile nav on Escape key
+            if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+                mobileToggle.classList.remove('active');
+                mobileNav.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
         });
     
